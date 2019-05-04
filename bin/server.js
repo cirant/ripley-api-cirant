@@ -3,37 +3,18 @@
 /**
  * Module dependencies.
  */
+'use strict';
 
-var app = require('../src/app');
-var debug = require('debug')('api:server');
-var http = require('http');
-
-/**
- * Get port from environment and store in Express.
- */
-
-const port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+const app = require('../src/app');
+const debug = require('debug')('api:server');
+const http = require('http');
+require('dotenv').config();
 
 /**
  * Normalize a port into a number, string, or false.
  */
 
-function normalizePort(val) {
+const normalizePort = (val) => {
   var port = parseInt(val, 10);
 
   if (isNaN(port)) {
@@ -47,13 +28,23 @@ function normalizePort(val) {
   }
 
   return false;
-}
+};
+
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+const port = normalizePort(process.env.SERVER_POST || '3000');
+
+app.set('port', port);
+
 
 /**
  * Event listener for HTTP server "error" event.
  */
 
-function onError(error) {
+const onError = (error) => {
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -75,16 +66,31 @@ function onError(error) {
     default:
       throw error;
   }
-}
+};
+
+
+/**
+ * Create HTTP server.
+ */
+
+const server = http.createServer(app);
 
 /**
  * Event listener for HTTP server "listening" event.
  */
 
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
+const onListening = () => {
+  const addr = server.address();
+  const bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
-}
+};
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
