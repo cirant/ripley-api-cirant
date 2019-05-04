@@ -3,8 +3,6 @@
 /**
  * Module dependencies.
  */
-'use strict';
-
 const app = require('../src/app');
 const debug = require('debug')('api:server');
 const http = require('http');
