@@ -1,9 +1,9 @@
-// const express = require('express');
 import express from 'express';
-const logger = require('morgan');
+import logger from 'morgan';
 
-let indexRouter = require('./routes/index');
-let usersRouter = require('./routes/users');
+import indexRouter from './routes/';
+
+const usersRouter = require('./routes/users');
 
 const app = express();
 
