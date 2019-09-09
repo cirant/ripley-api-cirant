@@ -2,6 +2,7 @@ import express from 'express';
 import logger from 'morgan';
 import createError from 'http-errors';
 import * as admin from 'firebase-admin';
+import cors from 'cors';
 
 import indexRouter from './routes/';
 import productRouter from './routes/product';
@@ -18,6 +19,7 @@ admin.initializeApp({
 const app = express();
 
 app.use(logger('dev'));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
