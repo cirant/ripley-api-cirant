@@ -3,7 +3,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  res.json({ response: '!!!ok!!!!' });
+  res.redirect('https://simple.ripley.cl');
 });
 
 module.exports = router;
