@@ -34,7 +34,7 @@ var normalizePort = function normalizePort(val) {
  */
 
 
-var port = normalizePort(process.env.SERVER_POST || '3000');
+var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 /**
  * Event listener for HTTP server "error" event.
