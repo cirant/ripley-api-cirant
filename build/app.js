@@ -8,6 +8,8 @@ var _httpErrors = _interopRequireDefault(require("http-errors"));
 
 var admin = _interopRequireWildcard(require("firebase-admin"));
 
+var _cors = _interopRequireDefault(require("cors"));
+
 var _routes = _interopRequireDefault(require("./routes/"));
 
 var _product = _interopRequireDefault(require("./routes/product"));
@@ -24,12 +26,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 admin.initializeApp({
   credential: admin.credential.cert(Object.assign({
-    private_key: process.env.FIREBASE_PRIVATE_KEY
+    private_key: JSON.parse(process.env.FIREBASE_PRIVATE_KEY)
   }, _firebase.firebaseConfig)),
   databaseURL: 'https://riplay-b89be.firebaseio.com'
 });
 var app = (0, _express["default"])();
 app.use((0, _morgan["default"])('dev'));
+app.use((0, _cors["default"])());
 app.use(_express["default"].json());
 app.use(_express["default"].urlencoded({
   extended: false
