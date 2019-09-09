@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./build/server.js",
-    "build-babel": "babel -d ./build ./src",
+    "build-babel": "rm -rf build && babel -d ./build ./src",
     "dev": "nodemon --exec babel-node ./src/server",
     "lint": "eslint --ignore-path .gitignore ."
   },
