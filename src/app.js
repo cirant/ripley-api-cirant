@@ -1,3 +1,4 @@
+require('babel-polyfill');
 import express from 'express';
 import logger from 'morgan';
 import createError from 'http-errors';
