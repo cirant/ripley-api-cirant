@@ -11,7 +11,8 @@ import { firebaseConfig } from './firebase';
 
 admin.initializeApp({
   credential: admin.credential.cert(Object.assign({
-    private_key: JSON.parse(process.env.FIREBASE_PRIVATE_KEY),
+    private_key: process.env.FIREBASE_PRIVATE_KEY ||
+      JSON.parse(process.env.FIREBASE_PRIVATE_KEY),
   }, firebaseConfig)),
   databaseURL: 'https://riplay-b89be.firebaseio.com',
 });
