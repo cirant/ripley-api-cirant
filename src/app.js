@@ -3,18 +3,18 @@ import logger from 'morgan';
 import createError from 'http-errors';
 import * as admin from 'firebase-admin';
 import cors from 'cors';
+import axios from 'axios';
 
 import indexRouter from './routes/';
 import productRouter from './routes/product';
 
-import { firebaseConfig } from './firebase';
-
-admin.initializeApp({
-  credential: admin.credential.cert(Object.assign({
-    private_key: JSON.parse(process.env.FIREBASE_PRIVATE_KEY),
-  }, firebaseConfig)),
-  databaseURL: 'https://riplay-b89be.firebaseio.com',
-});
+axios.get(process.env.FIREBASE_CREDENTIALS)
+  .then(ress => {
+    admin.initializeApp({
+      credential: admin.credential.cert(ress.data),
+      databaseURL: 'https://riplay-b89be.firebaseio.com',
+    });
+  });
 
 const app = express();
 
