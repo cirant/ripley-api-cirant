@@ -4,11 +4,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 var client = redis.createClient(process.env.REDIS_SERVER, {
-  password: process.env.REDIS_PASSWORD
-}); //creates a new client 
+  password: process.env.REDIS_PASSWORD,
+});
 
 client.on('connect', function() {
-  console.log('redis connected');
+  console.log('redis connected...');
 });
 
 export class Service {
@@ -28,15 +28,21 @@ export class Service {
 
       return new Promise((resolve, reject) => {
         client.exists(sku, async(err, exist) => {
+          if (err){
+            this.handlerError(sku, 'fail getting product by sku');
+            return reject(err);
+          }
+
           if (exist === 1) {
-            client.get(sku, (e, el)=> { 
+            client.get(sku, (e, el) => {
               return resolve(JSON.parse(el));
             });
           } else {
-              const { data } = await axios.get(`${this.riplayUrl}/products/${sku}`);
-              client.set(sku, JSON.stringify(data));
-              client.expire(sku, 120);
-              return resolve(data);
+            const url = `${this.riplayUrl}/products/${sku}`;
+            const { data } = await axios.get(url);
+            client.set(sku, JSON.stringify(data));
+            client.expire(sku, 120);
+            return resolve(data);
           }
         });
       });
