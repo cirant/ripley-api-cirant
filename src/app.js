@@ -34,8 +34,10 @@ const authenticated = async(req, res, next) => {
   }
 };
 
-app.use('/', indexRouter);
-app.use('/product', authenticated, productRouter);
+const urlPrefix = process.env.API_PREFIX || '/';
+
+app.use(`${urlPrefix}`, indexRouter);
+app.use(`${urlPrefix}/product`, authenticated, productRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
